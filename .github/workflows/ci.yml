@@ -1,0 +1,29 @@
+name: Assignment 3 CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x app/app.sh scripts/*.sh tests/*.sh
+
+      - name: Run lint
+        run: ./scripts/lint.sh
+
+      - name: Run tests
+        run: ./tests/test.sh
+
+      - name: Build Docker image
+        run: ./scripts/build.sh
